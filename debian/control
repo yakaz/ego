@@ -1,0 +1,16 @@
+Source: erlang-ego
+Section: devel
+Priority: optional
+Maintainer: Jean-Sébastien Pédron <jean-sebastien@yakaz.com>
+Uploaders: Christopher Faulet <christopher@yakaz.com>
+Build-Depends: debhelper (>= 8),
+ erlang-dev (>= 1:15.b.1),
+ rebar
+Standards-Version: 3.9.4
+
+Package: erlang-ego
+Architecture: all
+Depends: ${misc:Depends}, ${erlang:Depends}
+Description: GeoIP Erlang binding
+ This application loads and queries and GeoIP2 databases provided by
+ Maxmind.

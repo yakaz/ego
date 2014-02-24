@@ -1,0 +1,32 @@
+#!/usr/bin/make -f
+
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
+PACKAGE = ego
+VERSION = $(shell dpkg-parsechangelog | grep ^Version | cut -d" " -f2 | cut -d"-" -f1)
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	rebar compile -v skip_deps=true
+
+override_dh_auto_test:
+	rebar eunit -v skip_deps=true
+
+override_dh_auto_clean:
+	rebar clean
+
+override_dh_auto_install:
+	install -d \
+		$(CURDIR)/debian/erlang-$(PACKAGE)/usr/lib/erlang/lib/$(PACKAGE)-$(VERSION)/ebin
+	install -m 644 ebin/* \
+		$(CURDIR)/debian/erlang-$(PACKAGE)/usr/lib/erlang/lib/$(PACKAGE)-$(VERSION)/ebin/
+
+override_dh_gencontrol-arch:
+	erlang-depends -a
+	dh_gencontrol -a
+
+override_dh_compress-arch:
+	dh_compress -X.erl -X.beam
