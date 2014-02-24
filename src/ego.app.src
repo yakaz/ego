@@ -1,4 +1,6 @@
 %% -*- erlang -*-
 {application, ego,
- [{vsn, []},
+  [{description, "GeoIP databases binding"},
+  {vsn, "0.1.0"},
+  {registered, []},
   {applications, [kernel, stdlib]}]}.
